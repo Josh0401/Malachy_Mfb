@@ -22,11 +22,22 @@ export function SiteHeader() {
   return (
     <header className="site-header">
       <div className="container nav-wrap">
-        <Link href="/" className="brand" aria-label="Malachy Microfinance Bank home" onClick={() => setOpen(false)}>
+        <Link
+          href="/"
+          className="brand"
+          aria-label="Malachy Microfinance Bank home"
+          onClick={() => setOpen(false)}
+        >
           <span className="brand-logo-frame">
-            <Image src="/malachy-logo.png" alt="Malachy logo" width={100} height={104} priority />
+            <Image
+              src="/malachy-logo.png"
+              alt="Malachy Microfinance Bank Ltd"
+              width={2048}
+              height={682}
+              priority
+              sizes="(max-width: 480px) 160px, (max-width: 800px) 180px, 230px"
+            />
           </span>
-          <span className="brand-caption">MICROFINANCE BANK</span>
         </Link>
 
         <nav className="desktop-nav" aria-label="Main navigation">

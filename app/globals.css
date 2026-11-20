@@ -240,3 +240,554 @@ input, textarea { cursor: text; }
 @keyframes bank-backdrop-enter{from{opacity:0}to{opacity:1}}
 input:focus,select:focus,textarea:focus{box-shadow:0 0 0 3px rgba(136,235,116,.16);transition:box-shadow .2s ease,border-color .2s ease}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.motion-target{opacity:1!important;transform:none!important;filter:none!important;clip-path:none!important}.page-transition{animation:none}}
+
+
+/* =========================================================
+   MALACHY MOBILE LAYOUT + HORIZONTAL OVERFLOW CORRECTION
+   Uses the supplied full-width transparent Malachy logo.
+   ========================================================= */
+
+/* Keep the document viewport locked to the device width. */
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+@supports not (overflow: clip) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+}
+
+body {
+  position: relative;
+}
+
+img,
+video,
+iframe,
+svg,
+canvas {
+  max-width: 100%;
+}
+
+@media (max-width: 800px) {
+  /* Prevent grid and flex children from forcing the page wider. */
+  *,
+  *::before,
+  *::after {
+    min-width: 0;
+  }
+
+  main,
+  section,
+  header,
+  footer,
+  .site-header,
+  .container,
+  .section,
+  .hero-section,
+  .intro-strip,
+  .calculator-section,
+  .business-section,
+  .insights-section,
+  .careers-section,
+  .contact-section,
+  .site-footer {
+    max-width: 100%;
+  }
+
+  .container {
+    width: calc(100% - 36px);
+    margin-inline: auto;
+  }
+
+  /* Navbar: display the exact horizontal logo at a useful size. */
+  .site-header {
+    width: 100%;
+    overflow: visible;
+  }
+
+  .nav-wrap {
+    width: calc(100% - 32px);
+    max-width: 620px;
+    height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .brand {
+    display: flex;
+    flex: 0 1 auto;
+    min-width: 0;
+    width: auto;
+    max-width: calc(100% - 56px);
+    align-items: center;
+    gap: 0;
+  }
+
+  .brand-logo-frame {
+    display: block;
+    flex: 0 1 190px;
+    width: 190px;
+    height: auto;
+    max-width: 100%;
+    overflow: visible;
+    background: transparent;
+  }
+
+  .brand-logo-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 64px;
+    object-fit: contain;
+  }
+
+  .brand-caption {
+    display: none !important;
+  }
+
+  .mobile-menu-button {
+    display: grid;
+    flex: 0 0 42px;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    place-items: center;
+  }
+
+  .mobile-nav {
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Stop wide children from expanding page sections. */
+  .hero-section,
+  .intro-strip,
+  .section,
+  .calculator-section,
+  .business-section,
+  .insights-section,
+  .careers-section,
+  .contact-section,
+  .site-footer {
+    overflow-x: clip;
+  }
+
+  .hero-grid,
+  .about-grid,
+  .contact-grid,
+  .calculator-card,
+  .business-panel,
+  .services-grid,
+  .benefits-grid,
+  .insights-grid,
+  .footer-main,
+  .section-heading-row {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .hero-copy,
+  .hero-visual,
+  .about-copy,
+  .about-visual,
+  .business-copy,
+  .business-art,
+  .contact-copy,
+  .contact-card,
+  .calculator-form,
+  .calculator-result,
+  .insight-card,
+  .service-card,
+  .benefit-card,
+  .footer-column {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .hero-copy h1,
+  .section-heading h2,
+  .about-copy h2,
+  .business-copy h2,
+  .careers-inner h2,
+  .contact-copy h2 {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  .hero-description,
+  p,
+  li,
+  a {
+    overflow-wrap: anywhere;
+  }
+
+  .hero-actions {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .hero-actions .button {
+    max-width: 100%;
+  }
+
+  .hero-image-wrap,
+  .about-image-main,
+  .insight-image {
+    max-width: 100%;
+  }
+
+  /* Tables and long admin content may scroll inside their own panel,
+     but must never widen the page itself. */
+  .admin-shell {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: clip;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .admin-main,
+  .admin-content,
+  .admin-topbar,
+  .admin-page,
+  .admin-panel,
+  .admin-card {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .admin-table-wrap,
+  .table-wrap,
+  .data-table-wrap {
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+
+  .admin-table-wrap table,
+  .table-wrap table,
+  .data-table-wrap table {
+    min-width: 640px;
+  }
+
+  /* Hide decorative elements that can protrude beyond the viewport. */
+  .hero-orb,
+  .decorative-orb {
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: calc(100% - 32px);
+  }
+
+  .nav-wrap {
+    width: calc(100% - 28px);
+    height: 70px;
+    gap: 8px;
+  }
+
+  .brand {
+    max-width: calc(100% - 50px);
+  }
+
+  .brand-logo-frame {
+    flex-basis: 172px;
+    width: 172px;
+  }
+
+  .brand-logo-frame img {
+    max-height: 58px;
+  }
+
+  .mobile-menu-button {
+    flex-basis: 40px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .hero-section {
+    padding-top: 48px;
+  }
+
+  .hero-grid {
+    gap: 32px;
+    padding-bottom: 44px;
+  }
+
+  .hero-copy h1 {
+    font-size: clamp(34px, 9vw, 43px);
+    line-height: 1.1;
+    letter-spacing: -1.2px;
+  }
+
+  .hero-description {
+    font-size: 14px;
+    line-height: 1.75;
+  }
+
+  .hero-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .hero-actions .button {
+    width: 100%;
+  }
+
+  .floating-note {
+    left: 8px;
+    max-width: calc(100% - 16px);
+  }
+
+  .hero-bottom {
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .footer-bottom {
+    min-width: 0;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 360px) {
+  .container {
+    width: calc(100% - 28px);
+  }
+
+  .brand-logo-frame {
+    flex-basis: 150px;
+    width: 150px;
+  }
+
+  .brand-logo-frame img {
+    max-height: 50px;
+  }
+
+  .hero-copy h1 {
+    font-size: 32px;
+  }
+}
+
+
+/* Final brand/header sizing and fixed white sticky navigation */
+.site-header {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: 1px solid #e7ece7;
+}
+
+.brand {
+  flex: 0 0 auto;
+  min-width: 0;
+  width: auto;
+  gap: 0;
+}
+
+.brand-logo-frame {
+  display: block;
+  flex: 0 0 245px;
+  width: 245px;
+  height: auto;
+  max-width: none;
+  overflow: visible;
+  background: transparent;
+}
+
+.brand-logo-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 78px;
+  object-fit: contain;
+}
+
+.brand-caption {
+  display: none !important;
+}
+
+@media (max-width: 1100px) and (min-width: 801px) {
+  .brand-logo-frame {
+    flex-basis: 205px;
+    width: 205px;
+  }
+
+  .desktop-nav {
+    gap: 17px;
+  }
+
+  .nav-wrap {
+    gap: 18px;
+  }
+}
+
+@media (max-width: 800px) {
+  .site-header {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .nav-wrap {
+    height: 78px;
+    gap: 12px;
+  }
+
+  .brand {
+    flex: 0 1 auto;
+    width: auto;
+    max-width: calc(100% - 58px);
+  }
+
+  .brand-logo-frame {
+    flex: 0 1 205px;
+    width: 205px;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .brand-logo-frame img {
+    width: 100%;
+    height: auto;
+    max-height: 68px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-wrap {
+    height: 74px;
+  }
+
+  .brand-logo-frame {
+    flex-basis: 185px;
+    width: 185px;
+  }
+
+  .brand-logo-frame img {
+    max-height: 62px;
+  }
+}
+
+@media (max-width: 360px) {
+  .brand-logo-frame {
+    flex-basis: 165px;
+    width: 165px;
+  }
+
+  .brand-logo-frame img {
+    max-height: 56px;
+  }
+}
+
+
+/* Tablet spacing refinement (601px–800px) */
+@media (min-width: 601px) and (max-width: 800px) {
+  .container {
+    width: calc(100% - 80px);
+    max-width: 1120px;
+    margin-inline: auto;
+  }
+
+  .nav-wrap {
+    width: calc(100% - 64px);
+    max-width: 1120px;
+    padding-inline: 0;
+  }
+
+  .hero-section {
+    padding-top: 68px;
+  }
+
+  .hero-grid {
+    padding-bottom: 68px;
+    gap: 38px;
+  }
+
+  .hero-copy {
+    max-width: 650px;
+  }
+
+  .hero-copy h1 {
+    max-width: 650px;
+    font-size: clamp(42px, 6.2vw, 54px);
+    line-height: 1.12;
+    letter-spacing: -1.5px;
+  }
+
+  .hero-description {
+    max-width: 560px;
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  .hero-actions {
+    gap: 14px;
+  }
+
+  .section {
+    padding: 82px 0;
+  }
+
+  .section-heading {
+    margin-bottom: 34px;
+  }
+
+  .section-heading-row {
+    gap: 28px;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .service-card {
+    min-height: 220px;
+    padding: 24px 22px;
+  }
+
+  .about-grid {
+    gap: 42px;
+  }
+
+  .about-visual {
+    padding-right: 18px;
+  }
+
+  .benefits-grid {
+    gap: 14px;
+  }
+
+  .benefit-card {
+    padding: 24px 20px;
+  }
+
+  .business-panel {
+    padding: 38px 32px 24px;
+  }
+
+  .contact-grid {
+    gap: 38px;
+  }
+
+  .footer-main {
+    gap: 30px;
+  }
+}
